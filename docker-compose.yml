@@ -1,11 +1,10 @@
-version: '3'
 services:
   postgres:
     image: 'postgres:latest'
   redis:
     image: 'redis:latest'
   nginx:
-    restart: always  # we always want this running
+    restart: always
     build:
       dockerfile: Dockerfile.dev
       context: ./nginx
@@ -16,18 +15,18 @@ services:
       dockerfile: Dockerfile.dev
       context: ./server
     volumes:
-      - /app/node_modules  # don't do anything with this folder in the container
-      - ./server:/app  # when app tries to access anything in app, it gets redirected to the ./server directory in our project - this allow dynamic updates with code changes
-    environment:    # these are stored in the keys.js by accessing process.env.VAR_NAME
+      - /app/node_modules
+      - ./server:/app
+    environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - PGUSER=postgres
       - PGHOST=postgres
       - PGDATABASE=postgres
-      - PGPASSWORD=postgres_password  # this is the postgres default password
+      - PGPASSWORD=postgres_password
       - PGPORT=5432
   client:
-    build: 
+    build:
       dockerfile: Dockerfile.dev
       context: ./client
     ports:
@@ -36,9 +35,12 @@ services:
       - /app/node_modules
       - ./client:/app
   worker:
-    build: 
+    build:
       dockerfile: Dockerfile.dev
       context: ./worker
     volumes:
       - /app/node_modules
       - ./worker:/app
+    environment:
+    - REDIS_HOST=redis
+    - REDIS_PORT=6379
