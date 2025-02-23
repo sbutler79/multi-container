@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Build container
           command: |
-            docker build -t sbutler79/react-test -f ./client/Dockerfile.dev
+            docker build -t sbutler79/react-test -f ./client/Dockerfile.dev .
       - run:
           name: Run tests
           command: |
