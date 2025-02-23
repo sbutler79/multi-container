@@ -1,6 +1,13 @@
 services:
   postgres:
     image: 'postgres:latest'
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pg
+      - PGADMIN_DEFAULT_PASSWORD=pg
   redis:
     image: 'redis:latest'
   nginx:
@@ -44,3 +51,4 @@ services:
     environment:
     - REDIS_HOST=redis
     - REDIS_PORT=6379
+    
