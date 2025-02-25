@@ -40,7 +40,9 @@ jobs:
       - run:
           name: Login to docker
           command: |
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
+            echo "logging in"
+            echo "$DOCKER_ID" 
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
       - run:
           name: Push docker image
           command: |
