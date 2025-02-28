@@ -62,7 +62,8 @@ jobs:
       - run:
           name: Update Elastic Beanstalk with dockerrun
           command: |
-            aws s3 cp ./dockerrun.aws.json s3://elasticbeanstalk-eu-north-1-491085425180/multi-docker/dockerrun.aws.json --region eu-north-1
+            export AWS_REGION=eu-north-1
+            aws s3 cp ./dockerrun.aws.json s3://elasticbeanstalk-eu-north-1-491085425180/multi-docker/dockerrun.aws.json --debug
             aws elasticbeanstalk restart-app-server --environment-name Multi-Docker-env
 
 workflows:
